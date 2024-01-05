@@ -1,0 +1,6 @@
+.cartWidgetContainer {
+    display: flex;
+    width: 35px;
+    justify-content: space-between;
+    align-items: center;
+}
