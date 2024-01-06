@@ -1,10 +1,14 @@
 import './CartWidget.css'
-const CartWidget = () => {
+import { CartContext } from '../../context/CartContext';
+import { useContext } from "react";
 
-    return(
+const CartWidget = () => {
+    const { count } = useContext(CartContext);
+
+    return (
         <div className='cartWidgetContainer'>
             🛒
-            <span style={{fontWeight: 'bold', fontSize: '1.3rem'}}>1</span>
+            <span style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>{count}</span>
         </div>
     )
 }
