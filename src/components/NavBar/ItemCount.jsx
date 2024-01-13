@@ -1,43 +1,61 @@
-import { useCallback, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CartContext } from "../../context/CartContext";
 
+const ItemCount = ({ productId }) => {
+  const [countItem, setCountItem] = useState(1);
 
-export const ItemCount = () => {
-    const [countItem, setCountItem] = useState(0);
-    const { setCount } = useContext(CartContext);
+  const { count, setCount } = useContext(CartContext);
 
-    const handleAdd = () => {
-        setCountItem(countItem + 1);
-    }
+  const handleAdd = () => {
+    setCountItem(countItem + 1);
+  };
 
-    const handleRemove = () => {
-        if (countItem > 0) {
-            setCountItem(countItem - 1);
+  const handleRemove = () => {
+    setCountItem(countItem - 1);
+  };
+
+  const handleAddProductToCart = () => {
+    const newProduct = {
+      id: productId,
+      quantity: countItem,
+    };
+    if (count.length === 0) {
+      setCount([newProduct]);
+    } else {
+      count.map((item) => {
+        if (item.id === productId) {
+          return {
+            ...item,
+            quantity: item.quantity + countItem,
+          };
+        } else {
+          setCount([...count, newProduct]);
         }
+      });
     }
 
-    return (
-        <div style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            margin: 'auto'
-        }}>
-            <div style={{
-                marginBottom: '10px',
-                display: 'flex',
-                justifyContent: 'space-between',
-                width: '50%',
-                alignItems: 'center'
-            }}>
-                <Button onClick={handleRemove}>-</Button>
-                <span style={{fontSize: '1.5em'}}>{countItem}</span>
-                <Button onClick={handleAdd}>+</Button>
-            </div>
-            <Button onClick={() => setCount(countItem)}>Agregar al carrito</Button>
-        </div>
-    )
-}
+    setCountItem(1);
+  };
+
+  return (
+    <div>
+      <div
+        style={{
+          width: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          margin: "auto",
+        }}
+      >
+        <Button onClick={handleRemove}>-</Button>
+        <span>{countItem}</span>
+        <Button onClick={handleAdd}>+</Button>
+      </div>
+      <Button onClick={handleAddProductToCart}>Agregar al Carrito</Button>
+    </div>
+  );
+};
+
+export default ItemCount;
