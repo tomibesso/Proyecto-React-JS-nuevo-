@@ -9,7 +9,7 @@ export const Home = () => {
     document.title = "Mi tienda - Home";
   })
 
-    const { productsData } = useGetProducts(15);
+    const { productsData } = useGetProducts('products');
 
 
   return (

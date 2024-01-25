@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../context/CartContext";
 
 const ItemCount = ({ productId }) => {
   const [countItem, setCountItem] = useState(1);
@@ -16,23 +16,18 @@ const ItemCount = ({ productId }) => {
   };
 
   const handleAddProductToCart = () => {
-    const newProduct = {
-      id: productId,
-      quantity: countItem,
-    };
-    if (count.length === 0) {
-      setCount([newProduct]);
+    const productExists = count.find((item) => item.id === productId);
+
+    if (productExists) {
+      setCount(
+        count.map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity + countItem }
+            : item
+        )
+      );
     } else {
-      count.map((item) => {
-        if (item.id === productId) {
-          return {
-            ...item,
-            quantity: item.quantity + countItem,
-          };
-        } else {
-          setCount([...count, newProduct]);
-        }
-      });
+      setCount([...count, { id: productId, quantity: countItem }]);
     }
 
     setCountItem(1);
@@ -53,7 +48,9 @@ const ItemCount = ({ productId }) => {
         <span>{countItem}</span>
         <Button onClick={handleAdd}>+</Button>
       </div>
+      <div style= {{display: "flex", justifyContent: "center", marginTop: "15px"}}>
       <Button onClick={handleAddProductToCart}>Agregar al Carrito</Button>
+      </div>
     </div>
   );
 };

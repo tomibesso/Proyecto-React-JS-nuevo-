@@ -6,7 +6,7 @@ const ItemListContainer = ({ productsData }) => {
       <div style={{display: 'flex', justifyContent: 'space-around', width: '100vw', flexWrap: 'wrap'}}>
         {productsData.map((products) => {
           return (
-            <Card key={products.id} style={{ width: "18rem", }}>
+            <Card key={products.id} style={{ width: "17rem", margin: "5px"}}>
               <Link to={`/item/${products.id}`}> 
               <Card.Img variant="top" src={products.thumbnail} />
               </Link>
