@@ -26,7 +26,6 @@ const ItemCount = ({ productId, productName, productPrice, productImage, product
       price: productPrice,
       image: productImage,
       description: productDescription,
-      // Agrega más campos según sea necesario
     };
   
     if (productExists) {
@@ -65,7 +64,7 @@ const ItemCount = ({ productId, productName, productPrice, productImage, product
       </div>
       <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
         {/* Utiliza los datos del producto */}
-        <Button onClick={handleAddProductToCart}>Agregar al Carrito - {productName}</Button>
+        <Button onClick={handleAddProductToCart}>Agregar al Carrito</Button>
       </div>
     </div>
   );
