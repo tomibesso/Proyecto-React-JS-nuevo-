@@ -2,9 +2,8 @@ import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import { CartContext } from "../context/CartContext";
 
-const ItemCount = ({ productId }) => {
+const ItemCount = ({ productId, productName, productPrice, productImage, productDescription }) => {
   const [countItem, setCountItem] = useState(1);
-
   const { count, setCount } = useContext(CartContext);
 
   const handleAdd = () => {
@@ -12,12 +11,24 @@ const ItemCount = ({ productId }) => {
   };
 
   const handleRemove = () => {
-    setCountItem(countItem - 1);
+    if (countItem > 0) {
+      setCountItem(countItem - 1);
+    }
   };
 
   const handleAddProductToCart = () => {
     const productExists = count.find((item) => item.id === productId);
-
+  
+    const newProduct = {
+      id: productId,
+      quantity: countItem,
+      name: productName,
+      price: productPrice,
+      image: productImage,
+      description: productDescription,
+      // Agrega más campos según sea necesario
+    };
+  
     if (productExists) {
       setCount(
         count.map((item) =>
@@ -27,11 +38,15 @@ const ItemCount = ({ productId }) => {
         )
       );
     } else {
-      setCount([...count, { id: productId, quantity: countItem }]);
+      setCount([...count, newProduct]);
     }
-
+  
     setCountItem(1);
+  
+    // Guardar en sessionStorage
+    sessionStorage.setItem("cart", JSON.stringify([...count, newProduct]));
   };
+  
 
   return (
     <div>
@@ -48,8 +63,9 @@ const ItemCount = ({ productId }) => {
         <span>{countItem}</span>
         <Button onClick={handleAdd}>+</Button>
       </div>
-      <div style= {{display: "flex", justifyContent: "center", marginTop: "15px"}}>
-      <Button onClick={handleAddProductToCart}>Agregar al Carrito</Button>
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
+        {/* Utiliza los datos del producto */}
+        <Button onClick={handleAddProductToCart}>Agregar al Carrito - {productName}</Button>
       </div>
     </div>
   );

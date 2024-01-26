@@ -1,45 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-// import { collection, query, where, getDocs, getFirestore } from "firebase/firestore";
-import { getDoc, doc, getFirestore } from "firebase/firestore";
+
 export const Cart = () => {
-  const [products, setProducts] = useState([]);
   const { count } = useContext(CartContext);
 
-  const idList = count.map((item) => item.id);
-
-  useEffect(() => {
-    const db = getFirestore();
-    for (let i = 0; i < idList.length; i++) {
-      const docRef = doc(db, "products", idList[i]);
-      getDoc(docRef).then((doc) => {
-        setProducts((prevState) => [
-          ...prevState,
-          { id: doc.id, ...doc.data() },
-        ]);
-      });
-    }
-  }, [count]);
-
-//   useEffect(() => {
-//       const db = getFirestore();
-//       const itemCollection = collection(db, "products");
-//       const q = query(itemCollection, where("id", "in", ['dQ4TpHcYkDP3cGyNgykO']));
-
-//       getDocs(q)
-//         .then((snapshot) => {
-//           if (snapshot.empty) {
-//               console.log("No results!");
-//           } else {
-//               setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data().index
-//               })));
-//               console.log(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data()})))
-//           }
-//         })
-//         .catch(error => {
-//             console.error("Error fetching documents: ", error);
-//         });
-//   }, [count]);
-
-  return count.length === 0 ? <h1>No hay productos en el carrito</h1> : null;
+  return (
+    <div>
+      <h2>Carrito</h2>
+      {count.length < 1 ? (
+        <p>El carrito está vacío</p>
+      ) : (
+        <ul>
+          {count.map((item) => (
+            <li key={item.id}>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img src={item.image} alt={item.name} style={{ width: "50px", height: "50px", marginRight: "10px" }} />
+                <div>
+                  <h3>{item.name}</h3>
+                  <p>Descripción: {item.description}</p>
+                  <p>Cantidad: {item.quantity}</p>
+                  <p>Precio por unidad: ${item.price}</p>
+                  <p>Precio total: ${item.price * item.quantity}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 };

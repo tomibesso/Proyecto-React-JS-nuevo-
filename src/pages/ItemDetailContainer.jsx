@@ -16,7 +16,12 @@ export const ItemDetailContainer = () => {
         <Card.Title>{productData.title}</Card.Title>
         <Card.Text>{productData.description}</Card.Text>
         <div>{productData.price}</div>
-        <ItemCount productId={productData.id} />
+        <ItemCount           
+          productId={productData.id}
+          productName={productData.title}
+          productPrice={productData.price}
+          productImage={productData.thumbnail}
+          productDescription={productData.description} />
         <div style={{display: "flex", justifyContent: "center", marginTop: "5px"}}><Link to={`/update-product/${productData.id}`} >Editar producto</Link></div>
       </Card.Body>
     </Card>

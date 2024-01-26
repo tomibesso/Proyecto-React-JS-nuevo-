@@ -18,7 +18,7 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <NavDropdown title="Categorias" id="basic-nav-dropdown">
+            {/* <NavDropdown title="Categorias" id="basic-nav-dropdown">
               {categories.map((category, index) => {
                 return (
                   <NavDropdown.Item key={index}> 
@@ -28,7 +28,7 @@ const NavBar = () => {
                   </NavDropdown.Item>
                 );
               })}
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
 
